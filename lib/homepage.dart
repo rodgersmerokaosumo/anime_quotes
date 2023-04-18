@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'models/quote.dart';
 import 'dart:developer';
+import 'screens/screens.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -31,8 +33,52 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: SpeedDial(
+        closeManually: false,
+        animatedIcon: AnimatedIcons.menu_close,
+        spaceBetweenChildren: 0.5,
+        overlayOpacity: 0.2,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.search_rounded),
+            label: "Search Quotes",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchScreen(),
+                ),
+              );
+            },
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.shuffle_on_rounded),
+            label: "Random Quote",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const RandomQuoteScreen(),
+                ),
+              );
+            },
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.list_alt_rounded),
+            label: "Available Anime and Character Names",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AvailableNamesScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: SizedBox(
-        height: double.infinity,
+        height: double.maxFinite,
         child: RefreshIndicator(
           onRefresh: _handleRefresh,
           child: CustomScrollView(
@@ -54,7 +100,6 @@ class _HomepageState extends State<Homepage> {
                     fontSize: 30,
                     height: 1.5,
                     fontWeight: FontWeight.w800,
-                    fontFamily: GoogleFonts.getFont("Noto Serif"),
                   ),
                 ),
               ),
@@ -82,7 +127,6 @@ class _HomepageState extends State<Homepage> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Text(
@@ -137,12 +181,12 @@ class _HomepageState extends State<Homepage> {
 
   Future<void> getAnimeQuotes() async {
     var url = "https://animechan.vercel.app/api/quotes";
-    final response = await http.get(Uri.parse(url));
-    //final response = await rootBundle.loadString('assets/sample.json');
+    //final response = await http.get(Uri.parse(url));
+    final response = await rootBundle.loadString('assets/sample.json');
     //final data = [];
-    if (response.statusCode == 200) {
-      //final data = jsonDecode(response) as List;
-      final data = jsonDecode(response.body) as List;
+    if (true) {
+      final data = jsonDecode(response) as List;
+      //final data = jsonDecode(response.body) as List;
       setState(() {
         animeQuotes = data;
       });
