@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:http/http.dart' as http;
@@ -33,49 +34,51 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: SpeedDial(
-        closeManually: false,
-        animatedIcon: AnimatedIcons.menu_close,
-        spaceBetweenChildren: 0.5,
-        overlayOpacity: 0.2,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.search_rounded),
-            label: "Search Quotes",
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SearchScreen(),
-                ),
-              );
-            },
-          ),
-          SpeedDialChild(
-            child: const Icon(Icons.shuffle_on_rounded),
-            label: "Random Quote",
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RandomQuoteScreen(),
-                ),
-              );
-            },
-          ),
-          SpeedDialChild(
-            child: const Icon(Icons.list_alt_rounded),
-            label: "Available Anime and Character Names",
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AvailableNamesScreen(),
-                ),
-              );
-            },
-          ),
-        ],
+      floatingActionButton: DraggableFab(
+        child: SpeedDial(
+          closeManually: false,
+          animatedIcon: AnimatedIcons.menu_close,
+          spaceBetweenChildren: 0.5,
+          overlayOpacity: 0.2,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.search_rounded),
+              label: "Search Quotes",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchScreen(),
+                  ),
+                );
+              },
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.shuffle_on_rounded),
+              label: "Random Quote",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RandomQuoteScreen(),
+                  ),
+                );
+              },
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.list_alt_rounded),
+              label: "Available Anime and Character Names",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AvailableNamesScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: SizedBox(
         height: double.maxFinite,
